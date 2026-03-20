@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  pull_request:
+
+concurrency:
+  group: test-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: __NODE_VERSION__
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run test:ci
