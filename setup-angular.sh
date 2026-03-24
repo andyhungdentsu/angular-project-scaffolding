@@ -195,50 +195,7 @@ sed "s/__NODE_VERSION__/$NODE_VERSION/g" "$TEMPLATES_DIR/test.yml" > .github/wor
 
 info "已建立 .github/workflows/test.yml"
 
-# ---------- 步驟 8：CLAUDE.MD & Skills ----------
-
-info "設定 CLAUDE.MD ..."
-
-CLAUDE_CONTENT="$(cat "$TEMPLATES_DIR/claude-md-content.md")"
-
-# 檢查根目錄與 .claude/ 兩處的 CLAUDE.md
-process_existing_claude_md() {
-  local file="$1"
-  [ -f "$file" ] && [ -s "$file" ] || return 0
-
-  local existing
-  existing="$(cat "$file")"
-
-  if echo "$existing" | grep -iqE "angular|ng |component|directive|service|module"; then
-    info "偵測到 $file 含 Angular 相關內容，搬移至 angular-dev skill ..."
-    mkdir -p .claude/skills/angular-dev
-    cat > .claude/skills/angular-dev/SKILL.md <<SKILLEOF
----
-description: Angular 開發相關指引（從原 CLAUDE.MD 搬移）
-tags: [angular, development, guidelines]
----
-
-$existing
-SKILLEOF
-    info "已建立 .claude/skills/angular-dev/SKILL.md"
-  else
-    info "$file 內容與 Angular 無關，將清除"
-  fi
-
-  rm "$file"
-  info "已移除 $file"
-}
-
-process_existing_claude_md "CLAUDE.md"
-process_existing_claude_md ".claude/CLAUDE.md"
-
-# 寫入新的 CLAUDE.MD 至 .claude/
-mkdir -p .claude
-cat > ".claude/CLAUDE.md" <<CLAUDEEOF
-$CLAUDE_CONTENT
-CLAUDEEOF
-
-info "已建立 .claude/CLAUDE.md"
+# ---------- 步驟 8： Skills ----------
 
 # 安裝 Angular skills
 info "安裝 Angular skills ..."

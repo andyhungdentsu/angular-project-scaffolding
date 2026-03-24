@@ -1,6 +1,6 @@
 # Angular Project Scaffolding
 
-一鍵初始化 Angular 專案的互動式 Shell 腳本，自動配置 ESLint、Prettier、Git Hooks、GitHub Actions 與 Claude Code 開發守則。
+一鍵初始化 Angular 專案的互動式 Shell 腳本，自動配置 ESLint、Prettier、Git Hooks、GitHub Actions 與 Angular 相關 Skills。
 
 ## 使用方式
 
