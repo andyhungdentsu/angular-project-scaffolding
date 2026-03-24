@@ -197,9 +197,22 @@ info "已建立 .github/workflows/test.yml"
 
 # ---------- 步驟 8： Skills ----------
 
-# 安裝 Angular skills
-info "安裝 Angular skills ..."
-npx skills add analogjs/angular-skills -a claude-code
+_INSTALL_SKILLS=""
+prompt_input "是否要安裝 Angular 相關的 Claude Code Skills？(y/N)" _INSTALL_SKILLS
+
+if [[ "$_INSTALL_SKILLS" =~ ^[Yy](es)?$ ]]; then
+  info "安裝 Angular skills ..."
+  info "請按照以下提示步驟完成安裝："
+  info "  1. 執行安裝指令後，CLI 會顯示 skill 清單"
+  info "  2. 依照提示確認要安裝的 skills"
+  info "  3. 安裝完成後會自動繼續後續步驟"
+  echo ""
+  sleep 1.5
+  npx skills add analogjs/angular-skills -a claude-code
+  info "Angular skills 安裝完成！"
+else
+  info "跳過 Angular skills 安裝"
+fi
 
 # ---------- 步驟 9：Git Commit ----------
 
