@@ -1,11 +1,19 @@
 # Angular Project Scaffolding
 
-一鍵初始化 Angular 專案的互動式 Shell 腳本，自動配置 ESLint、Prettier、Git Hooks、GitHub Actions 與 Angular 相關 Skills。
+一鍵初始化 Angular 專案的互動式腳本，自動配置 ESLint、Prettier、Git Hooks、GitHub Actions 與 Angular 相關 Skills。
 
 ## 使用方式
 
+### macOS / Linux
+
 ```bash
 bash setup-angular.sh
+```
+
+### Windows
+
+```cmd
+setup-angular.bat
 ```
 
 腳本會透過互動式問答引導你完成設定，包含以下可配置項目：
@@ -19,7 +27,7 @@ bash setup-angular.sh
 
 ## 前置條件
 
-- 已安裝 [nvm](https://github.com/nvm-sh/nvm) 或 [Node.js](https://nodejs.org/)
+- 已安裝 [nvm](https://github.com/nvm-sh/nvm) / [nvm-windows](https://github.com/coreybutler/nvm-windows) 或 [Node.js](https://nodejs.org/)
 
 ## 腳本執行步驟
 
@@ -36,7 +44,8 @@ bash setup-angular.sh
 ## 檔案結構
 
 ```
-├── setup-angular.sh            # 主腳本
+├── setup-angular.sh            # 主腳本 (macOS / Linux)
+├── setup-angular.bat           # 主腳本 (Windows)
 ├── templates/
 │   ├── test.yml                # GitHub Actions 工作流程模板
 │   └── lint-staged.json        # lint-staged 設定
