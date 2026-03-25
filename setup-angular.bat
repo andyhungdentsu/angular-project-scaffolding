@@ -46,15 +46,8 @@ if %errorlevel% equ 0 (
     )
 )
 
-REM 確認 Angular CLI
-where ng >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [INFO]  安裝 Angular CLI v%ANGULAR_VERSION% ...
-    call npm install -g "@angular/cli@%ANGULAR_VERSION%"
-) else (
-    for /f "tokens=3" %%a in ('ng version 2^>nul ^| findstr "Angular CLI"') do set "CURRENT_NG=%%a"
-    echo [INFO]  已安裝 Angular CLI: !CURRENT_NG!
-)
+set "NG_CMD=npx -y @angular/cli@%ANGULAR_VERSION%"
+echo [INFO]  將使用 Angular CLI v%ANGULAR_VERSION%（透過 npx）
 
 REM ---------- 步驟 2：詢問專案路徑與名稱 ----------
 
@@ -79,7 +72,7 @@ REM ---------- 步驟 3：建立 Angular 專案 ----------
 
 echo [INFO]  建立 Angular 專案: %PROJECT_PATH%\%PROJECT_NAME% ...
 cd /d "%PROJECT_PATH%"
-call ng new "%PROJECT_NAME%"
+call %NG_CMD% new "%PROJECT_NAME%"
 
 cd /d "%PROJECT_NAME%"
 set "PROJECT_DIR=%CD%"
@@ -88,7 +81,7 @@ echo [INFO]  專案已建立於: %PROJECT_DIR%
 REM ---------- 步驟 4：安裝 ESLint + Prettier ----------
 
 echo [INFO]  安裝 ESLint (angular-eslint) ...
-call ng add @angular-eslint/schematics --skip-confirmation
+call %NG_CMD% add @angular-eslint/schematics --skip-confirmation
 
 echo [INFO]  安裝 Prettier 及 ESLint 整合套件 ...
 call npm install -D prettier eslint-config-prettier eslint-plugin-prettier prettier-plugin-organize-imports

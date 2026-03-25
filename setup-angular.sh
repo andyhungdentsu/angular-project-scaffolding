@@ -24,7 +24,7 @@ prompt_input() {
 
 HAS_NVM=false
 NODE_VERSION="22.14.0"
-ANGULAR_VERSION="19"
+ANGULAR_VERSION="20"
 
 if command -v nvm &>/dev/null || [ -s "$HOME/.nvm/nvm.sh" ]; then
   # 確保 nvm 已載入
@@ -61,14 +61,8 @@ else
   error "未偵測到 nvm 或 Node.js，請先安裝其中之一後再執行此腳本。"
 fi
 
-# 確認 Angular CLI
-if ! command -v ng &>/dev/null; then
-  info "安裝 Angular CLI v$ANGULAR_VERSION ..."
-  npm install -g "@angular/cli@$ANGULAR_VERSION"
-else
-  CURRENT_NG="$(ng version 2>/dev/null | grep 'Angular CLI' | awk '{print $NF}')"
-  info "已安裝 Angular CLI: $CURRENT_NG"
-fi
+NG_CMD="npx -y @angular/cli@${ANGULAR_VERSION}"
+info "將使用 Angular CLI v${ANGULAR_VERSION}（透過 npx）"
 
 # ---------- 步驟 2：詢問專案路徑與名稱 ----------
 
@@ -89,7 +83,7 @@ prompt_input "請輸入專案名稱" PROJECT_NAME
 
 info "建立 Angular 專案: $PROJECT_PATH/$PROJECT_NAME ..."
 cd "$PROJECT_PATH"
-ng new "$PROJECT_NAME"
+$NG_CMD new "$PROJECT_NAME"
 
 cd "$PROJECT_NAME"
 PROJECT_DIR="$(pwd)"
@@ -98,7 +92,7 @@ info "專案已建立於: $PROJECT_DIR"
 # ---------- 步驟 4：安裝 ESLint + Prettier ----------
 
 info "安裝 ESLint (angular-eslint) ..."
-ng add @angular-eslint/schematics --skip-confirmation
+$NG_CMD add @angular-eslint/schematics --skip-confirmation
 
 info "安裝 Prettier 及 ESLint 整合套件 ..."
 npm install -D prettier eslint-config-prettier eslint-plugin-prettier prettier-plugin-organize-imports
