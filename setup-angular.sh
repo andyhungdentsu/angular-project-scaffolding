@@ -20,6 +20,19 @@ prompt_input() {
   read -rp "$(printf "\033[1;36m[?]\033[0m %s: " "$msg")" "$var_name"
 }
 
+# ---------- 步驟 0：檢查 Git 設定 ----------
+
+GIT_USER_NAME=$(git config user.name 2>/dev/null || true)
+GIT_USER_EMAIL=$(git config user.email 2>/dev/null || true)
+
+if [[ -z "$GIT_USER_NAME" ]]; then
+  error "尚未設定 git user.name，請先執行：git config --global user.name \"Your Name\""
+fi
+if [[ -z "$GIT_USER_EMAIL" ]]; then
+  error "尚未設定 git user.email，請先執行：git config --global user.email \"you@example.com\""
+fi
+info "Git 使用者: $GIT_USER_NAME <$GIT_USER_EMAIL>"
+
 # ---------- 步驟 1：檢查 nvm / node ----------
 
 HAS_NVM=false

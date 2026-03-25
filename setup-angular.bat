@@ -13,6 +13,23 @@ set "TEMPLATES_DIR=%SCRIPT_DIR%templates"
 set "NODE_VERSION=22.14.0"
 set "ANGULAR_VERSION=20"
 
+REM ---------- 步驟 0：檢查 Git 設定 ----------
+
+for /f "usebackq tokens=*" %%a in (`git config user.name 2^>nul`) do set "GIT_USER_NAME=%%a"
+for /f "usebackq tokens=*" %%a in (`git config user.email 2^>nul`) do set "GIT_USER_EMAIL=%%a"
+
+if "%GIT_USER_NAME%"=="" (
+    echo [ERROR] 尚未設定 git user.name，請先執行：
+    echo         git config --global user.name "Your Name"
+    exit /b 1
+)
+if "%GIT_USER_EMAIL%"=="" (
+    echo [ERROR] 尚未設定 git user.email，請先執行：
+    echo         git config --global user.email "you@example.com"
+    exit /b 1
+)
+echo [INFO]  Git 使用者: %GIT_USER_NAME% ^<%GIT_USER_EMAIL%^>
+
 REM ---------- 步驟 1：檢查 nvm / node ----------
 
 where nvm >nul 2>&1
@@ -109,7 +126,7 @@ REM 在 .vscode/extensions.json 加入 prettier 與 eslint 推薦
 if not exist ".vscode" mkdir .vscode
 set "EXTENSIONS_FILE=.vscode\extensions.json"
 if exist "%EXTENSIONS_FILE%" (
-    node -e "const fs=require('fs');const raw=fs.readFileSync('%EXTENSIONS_FILE%','utf8');const stripped=raw.replace(/\/\/.*$/gm,'').replace(/\/\*[\s\S]*?\*\//g,'').replace(/,\s*([}\]])/g,'$1');const ext=JSON.parse(stripped);const toAdd=['esbenp.prettier-vscode','dbaeumer.vscode-eslint'];ext.recommendations=[...new Set([...(ext.recommendations||[]),...toAdd])];fs.writeFileSync('%EXTENSIONS_FILE%',JSON.stringify(ext,null,2)+'\n');"
+    node -e "const fs=require('fs');const raw=fs.readFileSync('%EXTENSIONS_FILE:\=/%','utf8');const stripped=raw.replace(/\/\/.*$/gm,'').replace(/\/\*[\s\S]*?\*\//g,'').replace(/,\s*([}\]])/g,'$1');const ext=JSON.parse(stripped);const toAdd=['esbenp.prettier-vscode','dbaeumer.vscode-eslint'];ext.recommendations=[...new Set([...(ext.recommendations||[]),...toAdd])];fs.writeFileSync('%EXTENSIONS_FILE:\=/%',JSON.stringify(ext,null,2)+'\n');"
 ) else (
     (
     echo {
