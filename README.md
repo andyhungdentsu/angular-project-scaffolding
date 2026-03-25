@@ -31,7 +31,7 @@ setup-angular.bat
 
 ## 腳本執行步驟
 
-1. **環境檢查** — 偵測 nvm / Node.js，切換或安裝指定版本，確認 Angular CLI
+1. **環境檢查** — 偵測 nvm / Node.js，切換或安裝指定版本、git 使用者、Angular 欲使用版本
 2. **建立專案** — 於指定路徑執行 `ng new`
 3. **ESLint + Prettier** — 安裝 `@angular-eslint/schematics`、Prettier 及相關整合套件，寫入 `.prettierrc`
 4. **VS Code 推薦擴充** — 在 `.vscode/extensions.json` 加入 Prettier 與 ESLint（相容 JSONC 格式）
