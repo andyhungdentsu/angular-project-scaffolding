@@ -11,7 +11,7 @@ set "SCRIPT_DIR=%~dp0"
 set "TEMPLATES_DIR=%SCRIPT_DIR%templates"
 
 set "NODE_VERSION=22.14.0"
-set "ANGULAR_VERSION=19"
+set "ANGULAR_VERSION=20"
 
 REM ---------- 步驟 1：檢查 nvm / node ----------
 
