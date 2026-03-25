@@ -30,7 +30,7 @@ bash setup-angular.sh
 5. **Git Hooks** — 安裝 husky + lint-staged，設定 pre-commit 執行 lint 與測試
 6. **package.json 配置** — 加入 `test:ci` script 與 `lint-staged` 規則
 7. **GitHub Actions** — 建立 `.github/workflows/test.yml`，於 PR 時自動執行 Lint 與 Test
-8. **CLAUDE.MD & Skills** — 處理既有 CLAUDE.MD（Angular 相關內容搬移至 skill），寫入開發守則至 `.claude/CLAUDE.md`，安裝 Angular skills
+8. **Skills** — 安裝 Angular skills
 9. **Git Commit** — 提交初始 commit
 
 ## 檔案結構
@@ -39,7 +39,6 @@ bash setup-angular.sh
 ├── setup-angular.sh            # 主腳本
 ├── templates/
 │   ├── test.yml                # GitHub Actions 工作流程模板
-│   ├── claude-md-content.md    # CLAUDE.MD 開發守則內容
 │   └── lint-staged.json        # lint-staged 設定
 └── README.md
 ```
